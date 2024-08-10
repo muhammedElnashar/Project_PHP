@@ -9,7 +9,7 @@
         </div>
         <div class="me-5" >
             <a href="#" class="text-white text-decoration-none  "><small class="text-white  mx-2">Admin</small></a>
-            <img class="mx-3 rounded-1" src="img.png" width="40px" height="50px"  alt="" style="margin-top: -12px; margin-bottom: -10px;" >
+            <img class="mx-3 rounded-1" src="" width="40px" height="50px"  alt="" style="margin-top: -12px; margin-bottom: -10px;" >
         </div>
     </div>
 </nav>
