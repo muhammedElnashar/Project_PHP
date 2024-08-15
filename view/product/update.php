@@ -19,7 +19,6 @@
         <?php include ("../../layouts/navbar.php"); ?>
 
         <?php
-        // var_dump($_REQUEST);
         require "db-connection.php";
 
         ini_set('display_errors', 1);
@@ -28,9 +27,8 @@
 
         if (isset($_GET['old_data'])) {
             $old_data = json_decode($_GET['old_data'], true);
-            // var_dump($old_data);
         }
-
+        $id = $_GET["id"];
 
         if ($db) {
             try {
@@ -38,8 +36,20 @@
                 $stmt = $db->prepare($select_stmt);
                 $res = $stmt->execute();
                 $category = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                // var_dump($permissions);
         
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+        if ($id && $db) {
+            try {
+                $select_query = "select * from product where id=:id";
+                $stmt = $db->prepare($select_query);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $img_path = $data["image"];
+                var_dump($data);
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
@@ -51,49 +61,50 @@
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Add Product</h4>
+                        <h2>Add Product</h2>
                     </div>
                     <div class="card-body">
-                        <form action="validation.php" method="post" enctype="multipart/form-data">
-                            <div class="mb-3 input-group ">
+                        <form action="updatevalidation.php" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="<?php echo $_REQUEST['id'] ?>">
+                            <div class="mb-3 input-group">
                                 <label for="product" class="input-group-text fw-bold">Product</label>
-                                
                                     <input type="text" class="form-control" id="product" name="name"
-                                        placeholder="Chosse Drink" value="<?php $val = isset($old_data['name']) ? $old_data['name'] : "";
+                                        placeholder="Chosse Drink" value="<?php $val = isset($data['name']) ? $data['name'] : "";
                                         echo $val ?>" required>
                             </div>
 
                             <div class="mb-3 input-group">
                                 <label for="price" class="input-group-text pe-4 fw-bold">Price</label>
-                                <input type="number" step="1" class="form-control me-2" id="price" name="price"
-                                        placeholder="Price" value="<?php $val = isset($old_data['price']) ? $old_data['price'] : "";
+                                    <input type="number" step="1" class="form-control me-2" id="price" name="price"
+                                        placeholder="Price" value="<?php $val = isset($data['price']) ? $data['price'] : "";
                                         echo $val ?>" required>
-
                             </div>
 
-                            <div class=" input-group">
+                            <div class="mb-3 input-group">
                                 <label for="category" class="input-group-text fw-bold">Category</label>
                                     <select class="form-select me-2" id="category" name="category" required>
-                                        <option selected disabled>.....</option>
-                                        <?php foreach ($category as $cat) { ?>
-                                            <option value="<?php echo $cat['id'] ?>"><?php echo $cat['name'] ?>
-                                            </option>
-                                        <?php }
-                                        ?>
+                                        
+                                        <option>.....</option>
 
-                                        <!--    <option value="1">Hot Drinks</option>
-                                                <option value="2">Cold Drinks</option>
-                                                <option value="3">Snacks</option> 
-                                        -->
+                                        <?php foreach ($category as $cat) { 
+                                            if ($cat['id'] == $data['category_id']) {
+                                                echo '<option selected value="'. $cat['id']. '">'. $cat['name']. '</option>';
+                                            } else {
+                                                echo '<option value="'. $cat['id']. '">'. $cat['name']. '</option>';
+                                            }
+                                        }
+                                        ?>
+                                       
+
+                                      
                                     </select>
 
-                                </div>
                             </div>
 
-                            <div class="ms-3 input-group">
-                                    <input type="file" class="form-control " name="image" >
+                            <div class="mb-3 input-group">
+                                    <input type="file" class="form-control" name="image">
                                     <label for="picture" class="input-group-text me-5 fw-bold">Product picture</label>
-                                </div>
+                            </div>
 
                             <div class="row mt-4">
                                 <div class="col-6">
@@ -106,8 +117,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="d-grid gap-2">
-                                        <button class="btn" style="background-color: #153257;color: white"
-                                            type="reset">Reset</button>
+                                        <a class="btn" href="table.php" style="background-color: #153257;color: white"
+                                            type="reset">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -115,17 +126,12 @@
                     </div>
                 </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        </body>
 
-</html>
-
-
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-<script src="../../assets/script.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="../../assets/script.js"></script>
 </body>
 
 </html>
