@@ -20,7 +20,7 @@
 
         <?php
         // print_r($_REQUEST);
-        require "db-connection.php";
+        require "../../db-connection.php";
         if (isset($_GET["oldData"])) {
             $oldData = json_decode($_GET["oldData"], true);
         }
@@ -48,7 +48,7 @@
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
                 $old_data = $stmt->fetch(PDO::FETCH_ASSOC);
-                print_r($old_data);
+                // print_r($old_data);
                 $img_path = $old_data["image"];
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -205,8 +205,7 @@
                     <div class="row mt-4">
                         <div class="col-6">
                             <div class="d-grid gap-2 ">
-                                <button class="btn" style="background-color: #23569c ;color: white" type="submit">Create
-                                    User</button>
+                                <button class="btn" style="background-color: #23569c ;color: white" type="submit">Update</button>
                             </div>
 
                         </div>

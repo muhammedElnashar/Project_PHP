@@ -1,5 +1,5 @@
 <?php
-require "db-connection.php";
+require "../../db-connection.php";
 // print_r($_REQUEST);
 
 if (isset($_GET['error'])) {

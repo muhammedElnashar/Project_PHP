@@ -1,6 +1,5 @@
 <?php
-require '../../db.php';
-include '../../utils.php';
+require "../../db-connection.php";
 if (isset($_GET["oldData"])) {
     $oldData = json_decode($_GET["oldData"], true);
 }

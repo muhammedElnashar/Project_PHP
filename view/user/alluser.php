@@ -18,7 +18,7 @@
     <?php include("../../layouts/navbar.php"); ?>
     
     <?php
-require "db-connection.php";
+require "../../db-connection.php";
 
 
 if($db){
