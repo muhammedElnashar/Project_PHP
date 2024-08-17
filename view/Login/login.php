@@ -24,11 +24,9 @@ if (isset($_GET['error'])) {
 if (isset($_GET['old_data'])) {
     $old_data = json_decode($_GET['old_data'], true);
 }
-// print_r($_SESSION);
 
 session_start();
-// print_r($_SESSION);
-// $_SESSION['name'] = "mohamed";
+
 ?>
 
 <body>
@@ -60,7 +58,7 @@ session_start();
             <div class="forgot-pass">
                 <a href="#">forgot password?</a>
             </div>
-            <button type="submit">Sign in</button>
+            <button type="submit" name="login_btn">Sign in</button>
             <div class="Sign-up">
                 Not registered
                 <a href="#">signup now </a>
