@@ -1,0 +1,194 @@
+<?php
+require "../../db.php";
+require "../../utils.php";
+if ($db) {
+    /* Select Last Order*/
+    try {
+        $select_qry = "SELECT  * FROM `order_items` order by id desc LIMIT 1;";
+        $stmt = $db->query($select_qry);
+        $orders = $stmt->fetch(PDO::FETCH_ASSOC);
+        $order_id = $orders["order_id"];
+        $select_qry2 = "SELECT name , image FROM order_items 
+         inner join product  on product.id = order_items.product_id
+        WHERE `order_id` = $order_id";
+        $statment = $db->prepare($select_qry2);
+        $statment->execute();
+        $products = $statment->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+    /*Select Products*/
+    try {
+        $select_Product = "SELECT id ,name , image , price  FROM product";
+        $stat1 = $db->prepare($select_Product);
+        $stat1->execute();
+        $allProduct = $stat1->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+}
+
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cafeteria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+
+<body>
+<?php include("../../layouts/sidebar.php"); ?>
+<div class="main p-3">
+    <?php include("../../layouts/navbar.php"); ?>
+    <div class=" ">
+        <div class="row mt-1">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="order.php" method="post">
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Qnt</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="append-product"></tbody>
+
+                            </table>
+                            <div class="form-group mt-5">
+                                <label for="notes">Notes</label>
+                                <textarea class="form-control" name="notes" id="notes"></textarea>
+                            </div>
+                            <div class="input-group mt-3">
+                                <span class="input-group-text">Room No.</span>
+                                <select class="form-select" aria-label="Default select example" name="room">
+                                    <option selected>Open this Select Rome</option>
+                                    <option value="application_1">Application 1</option>
+                                    <option value="application_2">Application 2</option>
+                                    <option value="cloud">Cloud</option>
+                                </select>
+                            </div>
+                            <hr style="border: #0f1010 5px " class="mt-3">
+                            <h4>
+                                Total :
+                                <span  class="total-order">0</span> EGP</h4>
+
+                        </div>
+                            <div class="d-grid gap-2">
+
+                                <button type="submit" id="add-order-btn" class="btn btn-info disabled">Submit </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-8 ">
+                <!--Last Order Product-->
+                <div class="card">
+                    <h6 class="card-header fw-bold  " style="background-color: #3795BD">
+                        Last Order
+                    </h6>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class='row'>
+                                <?php foreach ($products as $product): ?>
+                                    <div class='col-md-4 col-lg-2 mb-3 '>
+                                        <div class='card' style='border-radius: 20px;'>
+                                            <img src='../../images.jpeg' class='card-img-top'
+                                                 style='height: 150px;  border-radius: 20px 20px 0 0;'
+                                                 alt='Product Image'>
+                                            <div class='card-body'
+                                                 style='background-color: #3795BD; border-radius: 0 0 20px 20px; color: white;'>
+                                                <h5 class='card-title fw-bold text-center'><?php echo($product['name']); ?></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border: #0f1010 2px solid">
+                <!--all product-->
+                <div class="card">
+                    <h6 class="card-header fw-bold " style="background-color: #3795BD">
+                        Products
+                    </h6>
+                    <!--Last Order Product-->
+                    <div class="card-body">
+
+                        <div class="container">
+                            <div class='row'>
+                                <?php foreach ($allProduct as $product): ?>
+                                    <div class='col-md-4 col-lg-2 mt-2'>
+                                        <div class='card' style='border-radius: 20px;'>
+                                            <button class="btn add-product"
+                                                    style='border:none; border-radius: 20px 20px 0 0;'
+                                                    id="product-<?php echo($product['id']) ?>"
+                                                    data-name="<?php echo($product['name']) ?>"
+                                                    data-price="<?php echo($product['price']) ?>"
+                                                    data-id="<?php echo($product['id']) ?>">
+                                                <img src='../../images.jpeg' class='card-img-top '
+                                                     style='height: 150px; border-radius: 20px 20px 0 0;'
+                                                     alt='Product Image'>
+                                            </button>
+                                            <div class='card-body'
+                                                 style='background-color: #3795BD; border-radius: 0 0 20px 20px; color: white;'>
+                                                <h5 class='card-title'><?php echo($product['name']); ?></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   <div class="card-body" style=";flex-wrap: wrap" >
+                           <div class='row '>
+                               <?php
+                    /*                            foreach ($allProduct as $product) {
+
+                                                    echo "
+                                                    <div class='col mt-2'  >
+                                                    <div class='card' style='border-radius: 20px' >
+                                                        <img src='../../images.jpeg'  class='card-img-top  ' style='height: 150px; border-radius: 20px 20px 0 0' alt='...'>
+                                                        <div class='card-body' style='background-color: #3795BD ;border-radius:  0 0 20px 20px ;color: white'>
+                                                            <h5 class='card-title'>{$product['name']}</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                ";
+                                                }
+                                                */ ?>
+                           </div>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="../../assets/script.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>

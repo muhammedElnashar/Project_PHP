@@ -19,7 +19,7 @@
         <?php include ("../../layouts/navbar.php"); ?>
 
         <?php
-        require "db-connection.php";
+require "../../db-connection.php";
 
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
@@ -49,7 +49,7 @@
                 $stmt->execute();
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 $img_path = $data["image"];
-                var_dump($data);
+                // var_dump($data);
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
@@ -110,7 +110,7 @@
                                 <div class="col-6">
                                     <div class="d-grid gap-2 ">
                                         <button class="btn" style="background-color: #23569c ;color: white"
-                                            type="submit">Save
+                                            type="submit">Update
                                         </button>
                                     </div>
 

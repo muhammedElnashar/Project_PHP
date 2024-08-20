@@ -4,7 +4,7 @@ require "../../db-connection.php";
 $id = $_GET['id'];
 if ($id && $db) {
     try{
-        $select_query = "select * from `product` where id=:id";
+        $select_query = "select * from `users` where id=:id";
             $stmt =$db->prepare($select_query);
             $stmt->bindParam(":id",$id,PDO::PARAM_INT);
             $stmt->execute();
@@ -15,13 +15,13 @@ if ($id && $db) {
             }
 
 
-        $delete_qeury = "delete from `product` WHERE id=:userid";
+        $delete_qeury = "delete from `users` WHERE id=:userid";
         $stmt_del = $db->prepare($delete_qeury);
         $stmt_del->bindParam(":userid", $id, PDO::PARAM_INT);
         $res = $stmt_del->execute();
 
 
-        header("Location: table.php");
+        header("Location: alluser.php");
     }catch(PDOException $e){
         echo $e->getMessage();
     }
