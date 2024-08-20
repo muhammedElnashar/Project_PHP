@@ -32,17 +32,17 @@ body{
 
 }
 
-.filed{
+.field{
     height: 50px;
     width: 100%;
     display: flex;
     position: relative;
 }
-.filed:nth-child(2)
+.field:nth-child(2)
 {
     margin-top: 20px;
 }
-.filed input {
+.field input {
     height: 100%;
     width: 100%;
     padding-left: 45px;
@@ -57,19 +57,19 @@ body{
 
 }
 
-.filed input:focus
+.field input:focus
 {
     box-shadow: inset 1px 1px 2px #BABECC,
                 inset -1px -1px 2px #ffffff73 ;
 }
 
-.filed span {
+.field span {
     position: absolute;
     color: #595959;
     width: 50px;
     line-height: 50px;
 }
-.filed label
+.field label
 {
     position: absolute;
     top: 50%;
@@ -79,7 +79,7 @@ body{
     color: #666666;
 
 }
-.filed input:valid~label {
+.field input:valid~label {
     opacity: 0;
 }
 .forgot-pass
@@ -110,8 +110,8 @@ button
     outline: none;
     cursor: pointer;
     color: #595959;
-    box-shadow: inset 2px 2px 5px #BABECC,
-                inset -5px -5px 10px #ffffff73;
+    box-shadow:  2px 2px 5px #BABECC,
+                 -5px -5px 10px #ffffff73;
 
 }
 button:focus{

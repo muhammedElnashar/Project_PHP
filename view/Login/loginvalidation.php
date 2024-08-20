@@ -1,34 +1,5 @@
 <?php
 require '../../db.php';
-
-require "../../utils.php";
-var_dump($_POST);
-
-$email = $_POST['email'];
-$password = $_POST['password'];
-
-$errors = [];
-$old_data = [];
-$data = [];
-
-foreach ($_POST as $key => $value) {
-    if (empty($value)) {
-
-        $errors[$key] = "please enter a valid {$key}";
-    } else {
-        $old_data[$key] = $value;
-    }
-}
-if ($errors) {
-    $errors = json_encode($errors);
-    $url = "Location: login.php?error={$errors}";
-    if ($old_data) {
-        $old_data = json_encode($old_data);
-        $url .= "&old_data={$old_data}";
-    }
-    header($url);
-} else {
-
 if ($db) {
     if (isset($_POST['login_btn'])) {
         if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password']))) {
@@ -54,6 +25,4 @@ if ($db) {
         }
     }
 }
-
-}
-
+?>

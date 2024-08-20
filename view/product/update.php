@@ -1,3 +1,7 @@
+<?php
+require "../../authentication_admin.php";
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -19,7 +23,7 @@
         <?php include ("../../layouts/navbar.php"); ?>
 
         <?php
-require "../../db-connection.php";
+        require "../../db.php";
 
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
@@ -49,7 +53,6 @@ require "../../db-connection.php";
                 $stmt->execute();
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 $img_path = $data["image"];
-                // var_dump($data);
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }

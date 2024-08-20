@@ -1,5 +1,6 @@
 <?php
-require "../../db-connection.php";
+require "../../utils.php";
+require "../../db.php";
 
 $id = $_GET['id'];
 if ($id && $db) {

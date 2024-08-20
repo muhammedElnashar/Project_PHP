@@ -1,17 +1,5 @@
-
-<?php 
-require '../../utils.php';
-
-session_start();
-
-if($_SESSION['login']===true){
-
-}else{
-    $_SESSION=[];
-    session_destroy();
-    header('Location: ../Login/login.php');
-
-}
+<?php
+require "../../authentication_admin.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,12 +23,8 @@ if($_SESSION['login']===true){
 
         <?php
         // var_dump($_REQUEST);
-        require "../../db-connection.php";
-
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
+        require "../../db.php";
+        require "../../utils.php";
         if (isset($_GET['old_data'])) {
             $old_data = json_decode($_GET['old_data'], true);
             // var_dump($old_data);
@@ -96,10 +80,6 @@ if($_SESSION['login']===true){
                                         <?php }
                                         ?>
 
-                                        <!--    <option value="1">Hot Drinks</option>
-                                                <option value="2">Cold Drinks</option>
-                                                <option value="3">Snacks</option> 
-                                        -->
                                     </select>
 
                                 </div>
@@ -127,18 +107,14 @@ if($_SESSION['login']===true){
                                 </div>
                             </div>
                         </form>
-                        <a href='../Login/logout.php'class='btn btn-dark mx-auto px-5 my-5' > Logout </a>
                     </div>
                 </div>
-                
-
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         </body>
 
 </html>
 
-    echo "<a href='../Login/logout.php'class='btn btn-dark' > Logout </a>"; 
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

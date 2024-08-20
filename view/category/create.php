@@ -1,6 +1,5 @@
 <?php
-require "../../db-connection.php";
-
+require "../../authentication_admin.php";
 if (isset($_GET['error'])) {
     $errors = json_decode($_GET['error'], true);
 }

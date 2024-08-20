@@ -1,3 +1,7 @@
+<?php
+session_start();
+var_dump($_SESSION['name']);
+?>
 <!doctype html>
 <html lang="en">
 <head>

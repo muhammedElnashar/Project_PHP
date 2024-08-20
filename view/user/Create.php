@@ -1,5 +1,7 @@
 <?php
-require "../../db-connection.php";
+require "../../authentication_admin.php";
+
+require "../../db.php";
 // print_r($_REQUEST);
 
 if (isset($_GET['error'])) {

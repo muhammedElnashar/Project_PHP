@@ -1,5 +1,6 @@
 <?php
-require "../../db-connection.php";
+require "../../db.php";
+require "../../utils.php";
 
 $name = $_POST["name"];
 $errors = [];

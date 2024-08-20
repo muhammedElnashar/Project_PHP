@@ -1,3 +1,6 @@
+<?php
+require "../../authentication_admin.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -19,8 +22,7 @@
         <?php include ("../../layouts/navbar.php"); ?>
 
         <?php
-        // print_r($_REQUEST);
-        require "../../db-connection.php";
+        require "../../db.php";
         if (isset($_GET["oldData"])) {
             $oldData = json_decode($_GET["oldData"], true);
         }
@@ -48,7 +50,6 @@
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
                 $old_data = $stmt->fetch(PDO::FETCH_ASSOC);
-                // print_r($old_data);
                 $img_path = $old_data["image"];
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -205,7 +206,7 @@
                     <div class="row mt-4">
                         <div class="col-6">
                             <div class="d-grid gap-2 ">
-                                <button class="btn" style="background-color: #23569c ;color: white" type="submit">Update</button>
+                                <button class="btn" style="background-color: #23569c ;color: white" type="submit">Update User</button>
                             </div>
 
                         </div>

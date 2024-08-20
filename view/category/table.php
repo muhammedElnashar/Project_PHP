@@ -1,3 +1,6 @@
+<?php
+require "../../authentication_admin.php";
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,8 +21,8 @@
 <div class="main p-3">
     <?php include("../../layouts/navbar.php"); ?>
     <?php
-require "../../db-connection.php";
-if($db){
+    require "../../db.php";
+    if($db){
         try{
             $select_stmt = "SELECT * FROM categories;";
             $stmt = $db->prepare($select_stmt);
@@ -33,16 +36,16 @@ if($db){
 
 
     echo " <div class='card mt-5 w-75 m-auto' >
-        <div class='card-header'>
+        <h5 class='card-header fw-bold'>
             Category
-        </div>
+        </h5>
         <div class='card-body'>";
     if ($categories) {
 
         echo "
     <div class= >   
-    <table class='table ' >  
-    <tr  style='background-color: #d9d7d7;'>
+    <table class='table table table-bordered ' >  
+    <tr >
         <th>Category ID</th>
         <th>Category Name</th>
         <th>Delete</th>

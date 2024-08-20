@@ -1,9 +1,20 @@
 $(document).ready(function(){
+    let userId = null;
+    let UserPermission1   = parseInt($(`#user-permission1`).val());
+    $(`#GetUserId`).on('change', function(){
+         userId = $(this).val();
+    })
+
 $('.add-product').on('click', function(e) {
     e.preventDefault();
-    let name =$(this).data(`name`);
-    let id =$(this).data(`id`);
-    let price =$(this).data(`price`);
+    if (  userId === null && UserPermission1 === 1 ) {
+        alert('select User ');
+        return;
+    }
+
+    let name = $(this).data(`name`);
+    let id = $(this).data(`id`);
+    let price = $(this).data(`price`);
     $(this).addClass('disabled')
 
     let html =
@@ -13,6 +24,7 @@ $('.add-product').on('click', function(e) {
             <td>
                <div class="input-group mb-3">
                <input type="hidden" name="product[]" value="${id}">
+                  <input type="hidden" name="user_id" value="${userId}">
                     <input type="number" name="quantity[]" data-price="${price}" class="form-control-sm product-qty" min="1" value="1">
                 </div>
                 </td>
@@ -52,6 +64,5 @@ price += parseInt($(this).html());
         $(`#add-order-btn`).removeClass('disabled');
     }else{
         $(`#add-order-btn`).addClass('disabled');
-
     }
 }
