@@ -1,8 +1,5 @@
 <?php
-require 'db-connection.php';
-var_dump($_POST);
-// var_dump($_FILES);
-// exit;
+require '../../db.php';
 
 
 $name = $_POST['name'];
@@ -68,7 +65,7 @@ if ($errors) {
 
     $image_name = $_FILES['image']['name'];
 
-    $image_path = "images/{$img_time}.{$extion}";
+    $image_path = "../../images/{$img_time}.{$extion}";
 
     $saved = move_uploaded_file($temp_name, $image_path);
 
@@ -89,15 +86,11 @@ if ($errors) {
 
         $res = $stmt->execute();
         if ($db->lastInsertId()) {
-            echo "insert";
-   
-            header("Location:alluser.php");
+            header("Location: alluser.php");
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 
 
-
-}
-;
+};

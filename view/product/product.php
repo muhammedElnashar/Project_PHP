@@ -1,3 +1,6 @@
+<?php
+require "../../authentication_admin.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -20,12 +23,8 @@
 
         <?php
         // var_dump($_REQUEST);
-        require "db-connection.php";
-
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
+        require "../../db.php";
+        require "../../utils.php";
         if (isset($_GET['old_data'])) {
             $old_data = json_decode($_GET['old_data'], true);
             // var_dump($old_data);
@@ -81,10 +80,6 @@
                                         <?php }
                                         ?>
 
-                                        <!--    <option value="1">Hot Drinks</option>
-                                                <option value="2">Cold Drinks</option>
-                                                <option value="3">Snacks</option> 
-                                        -->
                                     </select>
 
                                 </div>

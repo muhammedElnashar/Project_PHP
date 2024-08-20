@@ -1,3 +1,6 @@
+<?php
+require "../../authentication_admin.php";
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +21,7 @@
     <?php include("../../layouts/navbar.php"); ?>
     
     <?php
-require "db-connection.php";
+require "../../db.php";
 
 
 if($db){
@@ -32,9 +35,55 @@ if($db){
         echo $e->getMessage();
     }
 }
+    echo " <div class='card mt-5 w-75 m-auto' >
+        <h4 class='card-header fw-bold'>
+            Users
+        </h4>
+        <div class='card-body'>";
+    if ($users) {
+
+        echo "
+    <table class='table table-bordered ' >  
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Image</th>
+        <th>Ext</th>
+        <th>Delete</th>
+        <th>update</th>
 
 
-echo "<h1 class ='text-center m-3' fw-bold >ALL USER</h1>";
+     </tr>";
+        foreach ($users as $user) {
+            echo "<tr  > 
+            <td> {$user['id']}</td>
+            <td> {$user['name']}</td>
+            <td> {$user['room']}</td>
+            <td><img src='{$user['image']}' width='50' height='50'></td>
+            <td> {$user['ext']}</td>
+            <td><a href='delete.php?id={$user['id']}' class='btn btn-danger'>Delete</a></td>
+            <td><a href='edit.php?id={$user['id']}' class='btn btn-primary'>Update</a></td>
+
+        </tr>";
+
+        }
+
+    }
+
+    echo "</table>";
+    echo "<div class='row mt-4'>
+                    <div class='col-12'>
+                        <div class=''>
+                            <a class='btn' href='Create.php'  style='background-color: #23569c ;color: white' type='submit' >Add New User</a>
+                        </div>
+
+          </div>";
+
+
+
+
+/*echo "<h1 class ='text-center m-3' fw-bold >ALL USER</h1>";
 if ($users) {
 
     echo "
@@ -70,7 +119,7 @@ if ($users) {
 }
 
 echo "</table>";
-echo "<div class='container text-center' >  <a class='btn btn-primary text-center' href='Create.php '> Add new user </a></div>";
+echo "<div class='container text-center' >  <a class='btn btn-primary text-center' href='Create.php '> Add new user </a></div>";*/
 
 ?>
 

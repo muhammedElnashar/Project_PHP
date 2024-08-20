@@ -140,7 +140,7 @@ transform: rotate(45deg);
 .card{
     border-radius: 20px;
 }
-.card .card-header{
+.card .card-header {
     border-radius: 20px 20px 0 0;
     background-color: #0e223e;
     padding: 15px;

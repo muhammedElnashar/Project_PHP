@@ -1,6 +1,8 @@
 <?php
+require "../../authentication_admin.php";
 require "../../db.php";
-if ($db) {
+
+if ($db){
     try {
         $select_stmt = "SELECT * FROM users ;";
         $stmt = $db->prepare($select_stmt);
@@ -12,7 +14,7 @@ if ($db) {
     }
     try {
         $select_user = "SELECT `user_id`, `name`,sum(`amount`) as total_amount from `orders` 
-                   inner join users on users.id = orders.user_id 
+                   inner join users on users.id = orders.user_id  
                    group by user_id";
         $stat1 = $db->prepare($select_user);
         $stat1->execute();
@@ -163,11 +165,14 @@ if ($db) {
                 let CardBody = '<div class="card-body">';
 
                 // Create a container for the items in a single row
-                CardBody += '<div class="d-flex  justify-content-between ">';
+                CardBody += '<div class="d-flex  justify-content-space-between ">';
 
                 for (let i = 0; i < items.length; i++) {
                     CardBody += `
-                    <div class="card" style="width: 150px; border-radius: 20px; margin: 5px">
+                  <div class='card h3 position-relative m-3' style='border-radius: 20px; '>
+                          <span class="position-absolute  translate-middle badge rounded-pill " style="background-color: #0e223e ;  top:10px;left: 125px;width: 50px; height: 50px"   >
+                            ${items[i].price}
+                            </span>
                         <img src='../../images.jpeg' class='card-img-top'
                              style='height: 130px; border-radius: 20px 20px 0 0;'
                              alt='Product Image'>
@@ -175,6 +180,13 @@ if ($db) {
                              style='background-color: #153257; border-radius: 0 0 20px 20px; color: white;'>
                             <h5 class='card-title fw-bold text-center'>${items[i].name}</h5>
                         </div>
+                    <div class='position-relative    text-center'>
+                        <span class="position-absolute  translate-middle badge rounded-pill " style="background-color: #ffffff ; color: #153257;
+                            top:5px;left: 65px;width: 50px; height: 50px"   >
+                            ${items[i].quantity}
+                            </span>
+                            </div>
+
                     </div>
                 `;
                 }

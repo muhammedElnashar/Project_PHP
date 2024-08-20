@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 
 
-require "db-connection.php";
+require "../../db.php";
 
 // print_r($_REQUEST);
 // print_r($_FILES);
