@@ -1,4 +1,9 @@
+<?php
+require "../../authentication_admin.php";
+require '../../db.php';
+require '../../utils.php';
 
+?>
 
 <!doctype html>
 <html lang="en">
@@ -19,66 +24,74 @@
 <div class="main p-3">
     <?php include("../../layouts/navbar.php"); ?>
 
-    <?php 
+    <?php
 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
 
-require 'db-connection.php';
-if ($db){
-    try {
-        $select_qry ="SELECT * FROM `product`;";
-        $stmt = $db->query($select_qry);
-        $result = $stmt->execute();
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    }catch(Exception $e){
-        echo $e->getMessage();
+    if ($db) {
+        try {
+            $select_qry = "SELECT * FROM `product`;";
+            $stmt = $db->query($select_qry);
+            $result = $stmt->execute();
+            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
-    
-    }
-        echo "
-         <h1 class='text-center m-3'>All Product</h1>";
-    
+    echo " <div class='card mt-5 w-75 m-auto' >
+        <h4 class='card-header fw-bold'>
+            Product
+        </h4>
+        <div class='card-body'>";
     if ($products) {
-    
-        echo "<div class='container' >  
-        <table class='table '> 
-        <tr class='table-primary '>
+
+        echo "<div>  
+        <table class='table table-bordered '> 
+        <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
             <th>Image</th>
-            <th>ِAction</th>
+            <th>Available</th>
             <th>Update</th>
             <th>Delete</th>
          </tr>
     ";
-    //    print_r($users);
+        //    print_r($users);
         foreach ($products as $product) {
             echo "<tr>
                     <td>{$product["id"]}</td>
                     <td>{$product["name"]}</td>
                     <td > {$product["price"]} </td>
                     <td><img src='{$product["image"]}' width='50' height='50' class='mx-2'></td>
-                    <td> Avilable Edite  </td>
+                    <td>";
+                if ($product["status"] == 1){
+                       echo "<a class='btn btn-success' onclick='changeProductStatus({$product['id']},{$product['status']})' >Avaliable</a>";
+                }
+                else{
+                    echo "<a class='btn btn-dark' onclick='changeProductStatus({$product['id']},{$product['status']})' >Not Avaliable</a>";
+                }
+              echo  "</td>
                     <td><a href='update.php?id={$product["id"]}' class='btn btn-primary'>Update</a></td>
                     <td><a href='delete.php?id={$product["id"]}' class='btn btn-danger'>Delete</a></td>
                     <tr>";
-    
+
         }
     }
-    
-    echo "</table>
-             <div class='text-center mt-5'> <a class='btn btn-primary text-center' href='product.php'> Add New Product </a></div>
-    </div>
-             ";
-    
-    ?>
 
+    echo "</table>";
+    echo "<div class='row mt-4'>
+                    <div class='col-12'>
+                        <div class=''>
+                            <a class='btn' href='product.php'  style='background-color: #23569c ;color: white' type='submit' >Add New Product</a>
+                        </div>
+          </div>";
+    ?>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -86,14 +99,26 @@ if ($db){
 <script src="../../assets/script.js"></script>
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    function changeProductStatus(productId,status) {
 
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    </body>
-    </html>
+    $.ajax({
+        url: 'changeProductStatus.php',
+        type: 'POST',
+        data: {productId:productId,status:status},
+        success: function () {
+            location.reload();
+        },
+        error: function () {
+            alert('Failed to change product status');
+        }
+    })
+    }
+</script>
+</body>
+</html>
     
