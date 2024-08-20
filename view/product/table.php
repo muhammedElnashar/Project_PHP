@@ -27,7 +27,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-require 'db-connection.php';
+require "../../db-connection.php";
 if ($db){
     try {
         $select_qry ="SELECT * FROM `product`;";

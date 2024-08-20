@@ -18,8 +18,8 @@
 <div class="main p-3">
     <?php include("../../layouts/navbar.php"); ?>
     <?php
-    require "../../db.php";
-    if($db){
+require "../../db-connection.php";
+if($db){
         try{
             $select_stmt = "SELECT * FROM categories;";
             $stmt = $db->prepare($select_stmt);

@@ -1,7 +1,6 @@
 <?php
 
-require "../../db.php";
-require "../../utils.php";
+require "../../db-connection.php";
 
 $name = $_POST["name"];
 $id = $_POST["id"];
