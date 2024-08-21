@@ -129,34 +129,38 @@ if ($db) {
                 <h6 class="card-header fw-bold" style="background-color: #153257">
                     Order Items
                 </h6>`;
-                let CardBody = '<div class="card-body">';
-
-                CardBody += '<div class="d-flex flex-wrap   ">';
-
+                let CardBody = '<div class="card-body ">' +
+                    '<div class="row">';
                 for (let i = 0; i < items.length; i++) {
                     CardBody += `
-                        <div class='card h3 position-relative m-3' style='border-radius: 20px; '>
-                          <span class="position-absolute  translate-middle badge rounded-pill " style="background-color: #0e223e ;  top:10px;left: 125px;width: 50px; height: 50px"   >
-                            ${items[i].price}
-                            </span>
-                        <img src='../../images.jpeg' class='card-img-top'
-                             style='height: 130px; border-radius: 20px 20px 0 0;'
-                             alt='Product Image'>
-                        <div class='card-body'
-                             style='background-color: #153257; border-radius: 0 0 20px 20px; color: white;'>
-                            <h5 class='card-title fw-bold text-center'>${items[i].name}</h5>
-                        </div>
-                    <div class='position-relative    text-center'>
-                        <span class="position-absolute  translate-middle badge rounded-pill " style="background-color: #ffffff ; color: #153257;
-                            top:5px;left: 65px;width: 50px; height: 50px"   >
-                            ${items[i].quantity}
-                            </span>
-                            </div>
-                    </div>
-                `;
+                                    <div class='col-md-3 col-lg-2 mb-2 position-relative h3  mt-3'>
+                                      <span class="position-absolute  translate-middle badge rounded-pill  pt-2"
+                                                   style="background-color: #0e223e ;  top:10px;left: 160px;width: 50px; height: 50px ; z-index: 1">
+                                                       ${items[i].price}
+                                               </span>
+                                        <div class='card' style='border-radius: 20px;'>
+                                            <img src='../product/${items[i].image}' class='card-img-top'
+                                                 style='height: 150px;  border-radius: 20px 20px 0 0; '
+                                                 alt='Product Image'>
+                                            <div class='card-body '
+                                                 style='background-color: #153257; border-radius: 0 0 20px 20px; color: white;'>
+                                                <h5 class='card-title fw-bold text-center'> ${items[i].name}</h5>
+
+                                            </div>
+                                                                    <div class='position-relative    text-center'>
+                                                                     <span class="position-absolute  translate-middle badge rounded-pill "
+                                                                           style="background-color: #ffffff ; color: #153257;
+                                                                               top:0;left: 75px;width: 40px; height: 40px">
+                                                                                    ${items[i].quantity}
+                                                                                    </span>
+                                                                </div>
+                                        </div>
+                                    </div>`
                 }
 
-                CardBody += '</div> </div>';
+                CardBody += '</div>' +
+                    '</div>' +
+                    ' </div>';
                 $('#items').html(CardHeader + CardBody);
             },
 

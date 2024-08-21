@@ -23,13 +23,30 @@ require "../../authentication_admin.php";
     <?php
     require "../../db.php";
     if($db){
-        try{
-            $select_stmt = "SELECT * FROM categories;";
-            $stmt = $db->prepare($select_stmt);
-            $res = $stmt->execute();
-            $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $row_per_page = 3;
+            $start = 0;
+            $select_stmt = "SELECT COUNT(*) FROM categories";
+            $stmt = $db->query($select_stmt);
+            $num_row = $stmt->fetchColumn();
+            $pages = ceil($num_row / $row_per_page);
 
-        }catch(PDOException $e){
+            if (isset($_GET['page-nr'])) {
+                $page = intval($_GET['page-nr']);
+                if ($page > 0 && $page <= $pages) {
+                    $start = ($page - 1) * $row_per_page;
+                } else {
+                    $start = 0;
+                }
+            }
+
+            $select_stmt1 = "SELECT * FROM categories LIMIT :start, :row_per_page";
+            $stmt1 = $db->prepare($select_stmt1);
+            $stmt1->bindParam(':start',$start, PDO::PARAM_INT);
+            $stmt1->bindParam(':row_per_page',$row_per_page, PDO::PARAM_INT);
+            $stmt1->execute();
+            $categories = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
@@ -65,17 +82,35 @@ require "../../authentication_admin.php";
         }
 
     }
+?>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="?page-nr=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
 
-    echo "</table>";
-    echo "<div class='row mt-4'>
+            <li class="page-item">
+                <a class="page-link" href="?page-nr=<?= $pages;?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+<div class='row mt-4'>
                     <div class='col-12'>
                         <div class=''>
                             <a class='btn' href='create.php'  style='background-color: #23569c ;color: white' type='submit' >Add New Category</a>
                         </div>
 
                     </div>
-          </div>";
-    ?>
+          </div>
+
 
 </div>
 

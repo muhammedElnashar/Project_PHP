@@ -12,19 +12,19 @@ if ($_SESSION['permission'] == 1): ?>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <a href="../user/Create.php" class="sidebar-link">
                     <i class="lni lni-users"></i>
-                    <span>Users</span>
+                    <span> Create Users</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <a href="../product/product.php" class="sidebar-link">
                     <i class="lni lni-users"></i>
-                    <span>Product</span>
+                    <span>Add Product</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <a href="../category/create.php" class="sidebar-link">
                     <i class="lni lni-users"></i>
                     <span>Category</span>
                 </a>
@@ -32,15 +32,18 @@ if ($_SESSION['permission'] == 1): ?>
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
                    aria-expanded="false" aria-controls="auth">
-                    <i class="lni lni-protection"></i>
+                    <i class="lni lni-cart"></i>
                     <span>Order</span>
                 </a>
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Create Order</a>
+                        <a href="../order/create-order.php" class="sidebar-link">Create Order</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Checks</a>
+                        <a href="../order/checks.php" class="sidebar-link">Checks</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="../order/order.php" class="sidebar-link">Order</a>
                     </li>
 
                 </ul>
@@ -70,13 +73,13 @@ if ($_SESSION['permission'] == 1): ?>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="../order/create-order.php"" class="sidebar-link">
                         <i class="lni lni-users"></i>
                         <span>Create Order</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="../order/myOrder.php"" class="sidebar-link">
                         <i class="lni lni-users"></i>
                         <span>My Orders</span>
                     </a>

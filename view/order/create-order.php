@@ -47,6 +47,7 @@ if($db){
         $stat1 = $db->prepare($select_Product);
         $stat1->execute();
         $allProduct = $stat1->fetchAll(PDO::FETCH_ASSOC);
+
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -166,8 +167,8 @@ if ($db && $_SESSION['permission'] == 1 ){
                                 <?php foreach ($products as $product): ?>
                                     <div class='col-md-3 col-lg-2 mb-2 '>
                                         <div class='card' style='border-radius: 20px;'>
-                                            <img src='../../images.jpeg' class='card-img-top'
-                                                 style='height: 140px;  border-radius: 20px 20px 0 0;'
+                                            <img src='../product/<?php echo ($product["image"])?>' class='card-img-top'
+                                                 style='height: 150px;  border-radius: 20px 20px 0 0; '
                                                  alt='Product Image'>
                                             <div class='card-body'
                                                  style='background-color: #153257; border-radius: 0 0 20px 20px; color: white;'>
@@ -188,7 +189,6 @@ if ($db && $_SESSION['permission'] == 1 ){
                     <h5 class="card-header fw-bold " style="background-color: #153257">
                         Products
                     </h5>
-                    <!--Last Order Product-->
                     <div class="card-body">
 
                         <div class="container">
@@ -206,13 +206,13 @@ if ($db && $_SESSION['permission'] == 1 ){
                                                     data-name="<?php echo($product['name']) ?>"
                                                     data-price="<?php echo($product['price']) ?>"
                                                     data-id="<?php echo($product['id']) ?>">
-                                                <img src='../../images.jpeg' class='card-img-top bg-white '
-                                                     style='height: 150px; border-radius: 20px 20px 0 0;'
+                                                <img src='../product/<?php echo ($product["image"])  ?>' class='card-img-top bg-white  '
+                                                     style='height: 150px; width: 165px; border-radius: 20px 20px 0 0; margin-left: -6px'
                                                      alt='Product Image'>
                                             </button>
                                             <div class='card-body'
                                                  style='background-color: #153257; border-radius: 0 0 20px 20px; color: white;'>
-                                                <h4 class='card-title fw-bold text-center'><?php echo($product['name']); ?></h4>
+                                                <h4 class='card-title  text-center'><?php echo($product['name']); ?></h4>
                                             </div>
                                         </div>
                                     </div>
