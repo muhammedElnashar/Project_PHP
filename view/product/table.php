@@ -34,10 +34,26 @@ require '../../utils.php';
 
     if ($db) {
         try {
-            $select_qry = "SELECT * FROM `product`;";
-            $stmt = $db->query($select_qry);
-            $result = $stmt->execute();
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $row_per_page = 3;
+            $start = 0;
+            $select_stmt = "SELECT COUNT(*) FROM product";
+            $stmt = $db->query($select_stmt);
+            $num_row = $stmt->fetchColumn();
+            $pages = ceil($num_row / $row_per_page);
+            if (isset($_GET['page-nr'])) {
+                $page = intval($_GET['page-nr']);
+                if ($page > 0 && $page <= $pages) {
+                    $start = ($page - 1) * $row_per_page;
+                } else {
+                    $start = 0;
+                }
+            }
+            $select_qry = "SELECT * FROM `product` LIMIT :start, :row_per_page;";
+            $stmt1 = $db->prepare($select_qry);
+            $stmt1->bindValue(':start',$start, PDO::PARAM_INT);
+            $stmt1->bindValue(':row_per_page',$row_per_page, PDO::PARAM_INT);
+            $result = $stmt1->execute();
+            $products = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -83,20 +99,39 @@ require '../../utils.php';
 
         }
     }
+  ?>
+    </table>
+        <nav aria-label="Page navigation example">
+     <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="?page-nr=1" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
 
-    echo "</table>";
-    echo "<div class='row mt-4'>
+    <li class="page-item">
+      <a class="page-link" href="?page-nr=<?= $pages;?>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+    <div class='row mt-4'>
                     <div class='col-12'>
                         <div class=''>
                             <a class='btn' href='product.php'  style='background-color: #23569c ;color: white' type='submit' >Add New Product</a>
                         </div>
-          </div>";
-    ?>
+          </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script src="../../assets/script.js"></script>
+    </div>
+
 </body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

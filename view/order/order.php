@@ -1,5 +1,6 @@
 <?php
-
+require "../../db.php";
+require "../../authentication_admin.php";
 if ($db) {
     try {
         $stmt = $db->prepare("SELECT  name , orders.id,order_date,amount ,room , ext  FROM orders 
@@ -93,19 +94,19 @@ if ($db) {
                                         <!--Last Order Product-->
                                         <div class="card-body">
 
-                                            <div class="container d-flex flex-wrap">
+                                            <div class="container ">
                                                 <div class='row'>
                                                     <?php foreach ($products as $product): ?>
-                                                        <div class='col-md-4 col-lg-2 mt-2'>
+                                                        <div class='col-2 mt-3'>
 
                                                             <div class='card h3 position-relative'
                                                                  style='border-radius: 20px; '>
                                              <span class="position-absolute  translate-middle badge rounded-pill "
-                                                   style="background-color: #0e223e ;  top:10px;left: 150px;width: 50px; height: 50px">
+                                                   style="background-color: #0e223e ;  top:10px;left: 170px;width: 50px; height: 50px">
                                                <?php echo($product["price"]) ?>
                                                </span>
 
-                                                                <img src='../../images.jpeg'
+                                                                <img src='../product/<?php echo($product["image"])?>'
                                                                      class='card-img-top bg-white '
                                                                      style='height: 150px; border-radius: 20px 20px 0 0;'
                                                                      alt='Product Image'>
@@ -116,7 +117,7 @@ if ($db) {
                                                                 <div class='position-relative    text-center'>
                                                                      <span class="position-absolute  translate-middle badge rounded-pill "
                                                                            style="background-color: #ffffff ; color: #153257;
-                                                                               top:5px;left: 75px;width: 40px; height: 40px">
+                                                                               top:5px;left: 88px;width: 40px; height: 40px">
                                                                          <?php echo($product["quantity"]) ?>
 
                                                                                     </span>
@@ -129,7 +130,7 @@ if ($db) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer">
+                                        <div class="card-footer fw-bold h5">
                                         <span>
                                             Total : <?php echo($order["amount"]) ?>
                                         </span>
@@ -153,12 +154,12 @@ if ($db) {
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="../../assets/script.js"></script>
-</body>
-</html>
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script src="../../assets/script.js"></script>
+<script
+    integrity = "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin = "anonymous" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script src="../../assets/script.js"></script>
@@ -178,3 +179,5 @@ if ($db) {
         })
     }
 </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 <?php
+require "../../db.php";
 if ($db) {
     if (isset($_REQUEST['order_id'])) {
         try {

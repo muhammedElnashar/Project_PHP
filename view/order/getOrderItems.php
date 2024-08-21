@@ -4,7 +4,7 @@ require "../../db.php";
 if (isset($_GET['order_id'])) {
     $order_id = $_GET['order_id'];
     try {
-        $select_items = "SELECT name,price,image , quantity FROM order_items 
+        $select_items = "SELECT name , price, image , quantity FROM order_items 
          inner join product  on product.id = order_items.product_id
         WHERE `order_id` = :order_id";
         $stat2 = $db->prepare($select_items);

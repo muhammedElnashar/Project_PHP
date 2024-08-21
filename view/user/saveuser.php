@@ -65,7 +65,7 @@ if ($errors) {
 
     $image_name = $_FILES['image']['name'];
 
-    $image_path = "../../images/{$img_time}.{$extion}";
+    $image_path = "images/{$img_time}.{$extion}";
 
     $saved = move_uploaded_file($temp_name, $image_path);
 
